@@ -1189,7 +1189,7 @@ if (LANGS.length > 1){ $("langSeg").hidden = false;
   $("langSeg").querySelectorAll("button").forEach(b => b.onclick = () => applyLang(b.dataset.l)); }
 if (DEF.music && DEF.music.bpm){ $("tempoLcd").hidden = false; $("bpm").textContent = `≈${Math.round(DEF.music.bpm)}`; }
 const keyName = k => k.replace("#", "♯").replace(/b(?=m?$)/, "♭");
-if (DEF.music && DEF.music.key){ $("keyLcd").hidden = false; $("keyv").textContent = keyName(DEF.music.key) + (DEF.music.key_alt ? ` / ${keyName(DEF.music.key_alt)}` : ""); }
+if (DEF.music && DEF.music.key){ $("keyLcd").hidden = false; $("keyv").textContent = keyName(DEF.music.key) + (DEF.music.key_alt ? " / " + keyName(DEF.music.key_alt) : ""); }
 if (hasStream) $("stream").hidden = false;
 if (hasLx) $("lossless").hidden = false;
 if (hasStream || hasLx) $("fmtLbl").hidden = $("fmtRow").hidden = false;
