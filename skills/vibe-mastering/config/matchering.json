@@ -1,0 +1,6 @@
+{
+  "_about": "Preset for a Matchering run: the reference sets tone and width, so the tonal EQ is flat; mono bass (side HPF) is kept. Pass the reference with --set matchering.reference=/path/to/ref.wav",
+  "eq": [
+    {"type": "hp", "f": 100, "order": 2, "ch": "side"}
+  ]
+}

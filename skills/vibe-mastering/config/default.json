@@ -1,0 +1,41 @@
+{
+  "_about": "Chain defaults, calibrated on a pop test song (source -14.7 LUFS / -3.35 dBTP). Thresholds are absolute dBFS AFTER the input is normalized to input_norm_lufs, so they carry over to other songs. The tonal EQ starts empty: every move is decided per song from the first listen (ears.py) and plan.py, which also switches stages off when the song does not need them (references/chain.md sections 3 and 8). Song A's EQ is kept in chain.md as an example.",
+  "target_lufs": -10.0,
+  "ceiling_dbtp": -2.0,
+  "input_norm_lufs": -15.0,
+  "hpf_hz": 25,
+  "eq": [],
+  "lowcomp": {
+    "xover_hz": 120,
+    "thr": -18.3,
+    "ratio": 2.0,
+    "knee": 6,
+    "rms_ms": 25,
+    "att_ms": 30,
+    "rel_ms": 220
+  },
+  "glue": {
+    "sc_hpf_hz": 90,
+    "thr": -17.3,
+    "ratio": 2.0,
+    "knee": 6,
+    "rms_ms": 10,
+    "att_ms": 30,
+    "rel_ms": 200
+  },
+  "peak": {
+    "clip_above_lim_db": 1.5,
+    "clip_max_depth_db": 2.0,
+    "lev_lookahead_ms": 3.0,
+    "lev_release_ms": 200,
+    "lim_lookahead_ms": 1.5,
+    "lim_release_ms": 80,
+    "os_margin_db": 0.3
+  },
+  "fade_in_ms": 5,
+  "fade_out_ms": "auto",
+  "matchering": null,
+  "dyneq": null,
+  "tape": null,
+  "user_plugins": []
+}

@@ -1,0 +1,14 @@
+{
+  "name": "vibe-mastering",
+  "owner": {
+    "name": "Eliran Geffen"
+  },
+  "description": "Vibe-Mastering: local, free song mastering for Claude Code.",
+  "plugins": [
+    {
+      "name": "vibe-mastering",
+      "source": "./",
+      "description": "Vibe-Mastering - master a finished song locally: several loudness versions, codec-checked peaks, a synced A/B app with a console monitor section and a plain-language report (English or Hebrew)."
+    }
+  ]
+}

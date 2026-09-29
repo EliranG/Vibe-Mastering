@@ -1,0 +1,63 @@
+{
+ "page_title": "Master: Example Song",
+ "title": "Example Song",
+ "artist": "Example Artist",
+ "date": "23 Sep 2026",
+ "bottom_line": [
+  "The final version (v2) is ready for release: -10 LUFS, peak -2.1 dBTP, and it passed every check - including after Spotify, Apple and YouTube encoding.",
+  "The song is 4.7 dB louder and denser than the source, with no audible distortion: the peak stages worked only 17% of the time, and the clipper removed a negligible amount (-35 dB below the music).",
+  "Spotify and YouTube will turn it down by 4 dB, like any loud song. So what was gained is density and clarity, not volume.",
+  "The first verse (0:19-0:48) was compressed more than any other section: its punch dropped by 4.1 dB, against 2.8 in the choruses. If it sounds flat, that is the place to check.",
+  "The harshness around 10 kHz (typical of AI-generated songs) was softened: it now stands out 33% of the time instead of 47%, without touching the vocal range."
+ ],
+ "chips": [["Passed every check", "ok"], ["-10 LUFS · -2.1 dBTP", ""], ["No distortion after encoding", "ok"], ["Verse 1 compressed more - listen", "warn"]],
+ "files": [
+  {"name": "Example Song - Final master / Example Artist - Example Song (16bit 44.1k).wav", "use": "The file to upload to the distributor and to send to radio."},
+  {"name": "Example Artist - Example Song (24bit 48k).wav", "use": "The full-quality master, for the archive and future use."},
+  {"name": "Example Artist - Example Song (MP3 320).mp3", "use": "For listening and quick sharing (phone, messages, demos)."},
+  {"name": "Example Song - Mastering / A-B comparison.html", "use": "The live comparison app for every version, with the section map and a spectrogram (opens on a computer)."},
+  {"name": "All files", "use": "Tagged: artist \"Example Artist\", title \"Example Song\"."}
+ ],
+ "steps": [
+  {"what": "Input level alignment", "why": "Every song enters the chain at the same loudness (-15 LUFS), so the compressors behave the same on every song."},
+  {"what": "Processing at 4x resolution (192 kHz)", "why": "Keeps the EQ accurate in the top octave, and keeps the peak-control stages from creating digital distortion."},
+  {"what": "Removing inaudible lows (below 25 Hz)", "why": "They only use up peak headroom without adding anything you can hear."},
+  {"what": "Bass: a gentle cut at 45 Hz and mono bass", "why": "The bass notes (41-52 Hz) were the strongest part of the song. A gentle cut made room, and mono bass also works on phones and in clubs.", "effect": "In the sides, below 60 Hz, the energy fell from -24 to -36 dB."},
+  {"what": "Removing mud at 280 Hz", "why": "250 Hz-1 kHz was flat and high compared with the rest - that is what makes a boxy sound."},
+  {"what": "Vocal presence at 3.2 kHz", "why": "The 2 kHz octave was 4 dB below 1 kHz: the voice lacked presence."},
+  {"what": "Gentle air (+1 dB) and width in the top", "why": "The top was weak for the song. In the final version the boost was reduced from +2 to +1, because it sat on a harsh bump at 10 kHz."},
+  {"what": "Dynamic EQ at 10 kHz", "why": "The 10 kHz bump comes and goes, so the band cuts up to 2 dB only when it appears and barely touches the rest (-0.6 dB).", "effect": "The time the bump stands out fell from 47% to 33%."},
+  {"what": "Low-band compressor", "why": "The bass notes were uneven in level. The compressor evens them out (about 2 dB on loud moments) so the bass does not drive the peaks."},
+  {"what": "A gentle glue compressor", "why": "Joins the mix into one piece (about 1.5 dB). It ignores the kick, so the song does not breathe around every hit."},
+  {"what": "Peak control in three stages", "why": "A leveling limiter, a soft clipper and a final limiter, to reach -10 without any single stage working too hard.", "effect": "The limiter worked 17% of the time, and the clipper removed a negligible amount."},
+  {"what": "A -2 dBTP peak ceiling", "why": "Spotify's guideline for loud masters. In our test, at a -1 ceiling the YouTube and MP3 encodes went over 0 and distorted."},
+  {"what": "A fade at the end", "why": "The source file was cut in the middle of the reverb tail, and after the gain that became an audible click. A one-second fade ends it cleanly."},
+  {"what": "Final files", "why": "A 24bit/48kHz master without sample-rate conversion, a 16bit/44.1kHz copy for distribution and an MP3 320, all tagged with artist and title."}
+ ],
+ "sections_notes": [
+  "The song was split into 12 sections where its character changes. The same letter means a repeated section: both choruses (1:04 and 2:12) got E.",
+  "What it shows: the quiet sections (intro and stops) were barely compressed. The choruses lost 2.8 dB of punch, and the first verse lost 4.1 dB - the most. The verse is quieter and gets lifted more, so the compressors work on it relatively harder."
+ ],
+ "sound_notes": [
+  "The spectrogram shows the sound as a picture: time runs left to right, frequency bottom to top (bass at the bottom), and the brighter the colour, the louder.",
+  "The difference view shows exactly what was done: a thin blue line at 10 kHz that appears only in the loud sections - the dynamic EQ working only when needed - and a bluish area below 100 Hz in the loud sections - the low-band compressor.",
+  "Quiet sections look red. That is not an actual boost: at equal overall loudness, this is what compression looks like - quiet parts lifted relative to loud ones."
+ ],
+ "platform_notes": [
+  "Spotify and YouTube play every song at about -14 LUFS, and Apple at -16, so the song will be turned down on playback - which is expected. Thanks to its density it will still sound full and current next to other songs.",
+  "The song was encoded exactly as the platforms do and decoded back. The highest peak (-0.68 dBTP, on YouTube) stayed below 0, so there is no distortion."
+ ],
+ "prediction_notes": [
+  "Before rendering, the same chain was run at several loudness targets to see where the song starts to squash. Up to -10 everything is clean; at -9 the limiter already works 68% of the time and distortion appears - so -10 is the loudest target that still comes out clean."
+ ],
+ "source_notes": [
+  "No final limiter was found in the source, so there was room to work. The file is cut above 20 kHz, as many AI-generated exports are.",
+  "The source file carries a comment from the AI generator and a signed C2PA credential declaring AI generation. The master files carry only the artist and title tags, as requested. AI detection on platforms relies mainly on the sound itself, not on metadata."
+ ],
+ "recommendations": [
+  "Listen to the first verse (section 3, 0:19-0:48) in the comparison app with 'Loop section', against the source and in 'Normalized like Spotify' mode. If it sounds flat, a -11 LUFS version is an option; the prediction shows it very clean (limiter active 1% of the time).",
+  "Check the final version on a phone, on headphones and in a car before uploading.",
+  "Upload the 16bit/44.1kHz file from the final master folder to the distributor. Some distributors' upload forms have an AI-use disclosure step.",
+  "For the future: with separate vocal and backing stems, the verse and the harshness could be handled more precisely."
+ ]
+}
