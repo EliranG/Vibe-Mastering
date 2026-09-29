@@ -67,7 +67,7 @@ STR = {
     legend_diff="Difference: {v} minus the source, at equal integrated loudness. Orange = added (up to +6 dB), blue = reduced (up to -6 dB), dark = unchanged. Compression looks like this: quiet sections turn orange (lifted relative to the rest) and loud ones bluish; a narrow blue band that appears only part of the time = a dynamic EQ at work.",
     legend_spec="Spectrogram of {v} (log frequency axis, 40 Hz to 20 kHz, loudness-normalized so every version is shown on the same scale).",
     energy=dict(loud="loud", medium="medium", quiet="quiet"),
-    tempo="Tempo", key="Key", music_t="Estimated from the audio: half or double tempo, or a closely related key, is possible. Two keys = the two candidates came out almost equal.",
+    tempo="Tempo", tonality="Key", music_t="Estimated from the audio: half or double tempo, or a closely related key, is possible. Two keys = the two candidates came out almost equal.",
     level_src="Level", stream="Stream", volume="Volume", output_eng="Output", vu_ref="0 VU = −10 dBFS",
     codec_t="Hear it after encoding: {c}, decoded and aligned to the sample", codec_loading="Loading the stream preview…",
     codec_fail="The stream preview did not load: it plays from the link, or from a page served locally.",
@@ -121,7 +121,7 @@ STR = {
     legend_diff="הפרש {v} פחות המקור, בעוצמה כוללת שווה: כתום = נוסף (עד ‎+6 dB), כחול = הורד (עד ‎-6 dB), כהה = ללא שינוי. דחיסה נראית כך: קטעים שקטים כתומים (הורמו יחסית) וקטעים חזקים כחלחלים; פס כחול צר שמופיע רק בחלק מהזמן = EQ דינמי בפעולה.",
     legend_spec="ספקטרוגרמה של {v} (ציר תדר לוגריתמי 40 Hz עד 20 kHz, בעוצמה מנורמלת כדי שכל הגרסאות יושוו באותה סקאלה).",
     energy=dict(loud="שיא", medium="בינוני", quiet="שקט"),
-    tempo="טמפו", key="סולם", music_t="הערכה מתוך האודיו: ייתכן חצי או כפול טמפו, או סולם קרוב. שני סולמות = שני המועמדים יצאו כמעט שווים.",
+    tempo="טמפו", tonality="סולם", music_t="הערכה מתוך האודיו: ייתכן חצי או כפול טמפו, או סולם קרוב. שני סולמות = שני המועמדים יצאו כמעט שווים.",
     level_src="עוצמה", stream="סטרים", volume="ווליום", output_eng="יציאה", vu_ref="‎0 VU = −10 dBFS",
     codec_t="לשמוע אחרי קידוד: {c}, מפוענח ומיושר לדגימה", codec_loading="טוען את תצוגת הסטרים…",
     codec_fail="תצוגת הסטרים לא נטענה: היא עובדת מהקישור או מעמוד שמוגש משרת מקומי.",
@@ -297,7 +297,7 @@ def main():
                 .replace("__DEFAULTS_JSON__", js(dict(lang=langs[0], view=a.view, music=music, repo=REPO,
                                                       clicks=((EARS or {}).get("measurements") or {}).get("clicks") or [])))
                 .replace("__PAGE_TITLE__", html.escape(t["doc_title"])).replace("__HEADING__", html.escape(t["heading"]))
-                .replace("__BRAND__", BRAND).replace("__TAG__", TAG).replace("__CREDIT__", CREDIT).replace("__REPO__", REPO)
+                .replace("__BRAND__", BRAND).replace("__TAG__", TAG).replace("__BYLINE__", CREDIT).replace("__REPO__", REPO)
                 .replace("__SECTIONS_JSON__", js(json.load(open(a.sections))) if a.sections else "null"))
     left = sorted(set(re.findall(r"\{\{\w+\}\}", html_)))
     if left: raise SystemExit(f"template placeholders without a string: {left}")

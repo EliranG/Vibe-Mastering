@@ -349,7 +349,7 @@ body.boot .tracks .th,body.boot .tracks .lane,body.boot .rack .slot{animation:ri
     <div class="titlebar">
       <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
       <svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="8" fill="#10161d" stroke="#3fd8ff" stroke-opacity=".55"></rect><rect x="7" y="14" width="3" height="10" rx="1.5" fill="#3fd8ff"></rect><rect x="12" y="8" width="3" height="16" rx="1.5" fill="#3fd8ff"></rect><rect x="17" y="11" width="3" height="13" rx="1.5" fill="#3fd8ff"></rect><rect x="22" y="17" width="3" height="7" rx="1.5" fill="#9b8cff"></rect></svg>
-      <span class="brand">__BRAND__</span><span class="tag">__TAG__</span><span class="credit">__CREDIT__</span>
+      <span class="brand">__BRAND__</span><span class="tag">__TAG__</span><span class="credit">__BYLINE__</span>
       <div class="tbr">
         <div class="seg sm" id="viewSeg" role="group" title="{{view_t}}" data-tt="view_t"><button data-v="artist"><span class="led"></span><span data-t="view_art">{{view_art}}</span></button><button data-v="pro"><span class="led"></span><span data-t="view_pro">{{view_pro}}</span></button></div>
         <div class="seg sm" id="langSeg" role="group" title="{{lang_t}}" data-tt="lang_t" hidden></div>
@@ -371,7 +371,7 @@ body.boot .tracks .th,body.boot .tracks .lane,body.boot .rack .slot{animation:ri
       <div class="lcd"><span class="lbl" data-t="position">{{position}}</span><b id="time">0:00.0 <small>/ 0:00</small></b></div>
       <div class="lcd sm"><span class="lbl" data-t="section_now">{{section_now}}</span><b id="secnow">–</b></div>
       <div class="lcd sm mus" id="tempoLcd" hidden><span class="lbl" data-t="tempo">{{tempo}}</span><b id="bpm">–</b></div>
-      <div class="lcd sm mus" id="keyLcd" hidden><span class="lbl" data-t="key">{{key}}</span><b id="keyv">–</b></div>
+      <div class="lcd sm mus" id="keyLcd" hidden><span class="lbl" data-t="tonality">{{tonality}}</span><b id="keyv">–</b></div>
       <div class="tgroup push">
         <button class="btn" id="blind" aria-pressed="false"><span class="led"></span><span id="blindLabel">{{blind}}</span></button>
       </div>
@@ -478,7 +478,7 @@ body.boot .tracks .th,body.boot .tracks .lane,body.boot .rack .slot{animation:ri
   <footer class="foot">
     <span class="keys" id="keys"></span>
     <span class="fl"><a class="issue" id="issue" href="__REPO__/issues/new" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm9 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm-.25-6.25v3.5a.75.75 0 0 1-1.5 0v-3.5a.75.75 0 0 1 1.5 0Z"></path></svg><span data-t="issue_link">{{issue_link}}</span></a>
-      <a class="credit-l" href="__REPO__" target="_blank" rel="noopener">__BRAND__ &#183; __TAG__ &#183; __CREDIT__ &#183; github.com/EliranG/Vibe-Mastering</a></span>
+      <a class="credit-l" href="__REPO__" target="_blank" rel="noopener">__BRAND__ &#183; __TAG__ &#183; __BYLINE__ &#183; github.com/EliranG/Vibe-Mastering</a></span>
   </footer>
 </main>
 <script>
