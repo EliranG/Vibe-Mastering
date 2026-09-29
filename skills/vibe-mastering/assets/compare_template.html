@@ -1147,10 +1147,10 @@ function applyLang(l){
   $("vol").setAttribute("aria-label", T.volume); $("outSel").setAttribute("aria-label", T.out_label);
   $("langSeg").querySelectorAll("button").forEach(b => { const on = b.dataset.l === l; b.classList.toggle("on", on); b.setAttribute("aria-pressed", on); });
   $("playLabel").textContent = plain(playing ? T.pause : T.play); $("blindLabel").textContent = blind ? T.reveal : T.blind;
-  $("keys").innerHTML = keysHTML(); if (canSink){ $("outWrap").title = T.out_names_t; listOutputs(); }
+  document.getElementById("keys").innerHTML = keysHTML(); if (canSink){ $("outWrap").title = T.out_names_t; listOutputs(); }
   if (hasStream) $("stream").title = T.codec_t.split("{c}").join(T.codec_name || "");
   if (hasLx) $("lossless").title = T.lx_t || "";
-  const mu = DEF.music || {}; $("tempoLcd").title = $("keyLcd").title = [mu.key_name, T.music_t].filter(Boolean).join(" · ");
+  const mu = DEF.music || {}; $("tempoLcd").title = document.getElementById("keyLcd").title = [mu.key_name, T.music_t].filter(Boolean).join(" · ");
   $("issue").href = `${DEF.repo}/issues/new?labels=enhancement&title=${encodeURIComponent(T.issue_title)}`;
   updateNote(); if (V[0].peaks) renderRuler(); renderTracks();
   buildRack(); renderInsp(false); renderSecTable(); specLegend();
@@ -1161,7 +1161,7 @@ function applyView(vw){
   $("viewSeg").querySelectorAll("button").forEach(b => { const on = b.dataset.v === vw; b.classList.toggle("on", on); b.setAttribute("aria-pressed", on); });
   if (vw === "artist" && chMode === "side") setCh("st");                                   // the Artist view has no Side key; never leave it on unseen
   if (vw === "artist" && dimOn) setDim(false);
-  $("keys").innerHTML = keysHTML(); renderInsp(false); specDirty = true; specLegend();
+  document.getElementById("keys").innerHTML = keysHTML(); renderInsp(false); specDirty = true; specLegend();
 }
 function applyUnitView(u){ unitView = u; store.set("ms_unit", u);
   $("unitSeg").querySelectorAll("button").forEach(b => { const on = b.dataset.u === u; b.classList.toggle("on", on); b.setAttribute("aria-pressed", on); });
@@ -1189,7 +1189,7 @@ if (LANGS.length > 1){ $("langSeg").hidden = false;
   $("langSeg").querySelectorAll("button").forEach(b => b.onclick = () => applyLang(b.dataset.l)); }
 if (DEF.music && DEF.music.bpm){ $("tempoLcd").hidden = false; $("bpm").textContent = `≈${Math.round(DEF.music.bpm)}`; }
 const keyName = k => k.replace("#", "♯").replace(/b(?=m?$)/, "♭");
-if (DEF.music && DEF.music.key){ $("keyLcd").hidden = false; $("keyv").textContent = keyName(DEF.music.key) + (DEF.music.key_alt ? " / " + keyName(DEF.music.key_alt) : ""); }
+if (DEF.music && DEF.music.key){ document.getElementById("keyLcd").hidden = false; document.getElementById("keyv").textContent = keyName(DEF.music.key) + (DEF.music.key_alt ? " / " + keyName(DEF.music.key_alt) : ""); }
 if (hasStream) $("stream").hidden = false;
 if (hasLx) $("lossless").hidden = false;
 if (hasStream || hasLx) $("fmtLbl").hidden = $("fmtRow").hidden = false;
