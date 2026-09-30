@@ -1,7 +1,7 @@
 {
   "name": "vibe-mastering",
   "displayName": "Vibe-Mastering",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "Vibe-Mastering - master a finished song locally, the way a mastering engineer works - listen first, use only the tools the song needs (bypass-tested), and check the result at equal loudness. Several loudness versions, codec-checked peaks, a synced A/B app with a console monitor section, visual insert faceplates, stream and lossless preview, plugins you own, and a plain-language report in English or Hebrew.",
   "author": {
     "name": "Eliran Geffen"

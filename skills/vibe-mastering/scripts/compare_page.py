@@ -39,7 +39,7 @@ STR = {
     view_t="Level of detail. Artist and Pro show the same session; the audio is identical.", view_art="Artist", view_pro="Pro", lang_t="Language",
     play="▶ Play", pause="❚❚ Pause", back_t="Back 5 seconds", fwd_t="Forward 5 seconds",
     loop_t="Loop 10 seconds from the current position", loop="Loop 10 s",
-    secloop_t="Loop the current section", secloop="Loop section", product="A/B monitor", position="Position", section_now="Section", tracks="Tracks",
+    partloop_t="Loop the current section", partloop="Loop section", product="A/B monitor", position="Position", part_now="Section", tracks="Tracks",
     analyzer="Analyzer", master="Master", solo_t="Listen to this version", loading="Loading session...",
     monitor="Monitor", listen_label="Listening level", raw_btn="As delivered", spotify_btn="Normalized like Spotify (-14 LUFS)",
     ch_t="Mono sums left and right, so anything out of phase gets quieter or hollow; Side plays only what the stereo adds. Press a lit key again to return to stereo.",
@@ -58,8 +58,8 @@ STR = {
     spec_btn="Spectrogram", diff_btn="Difference from the source",
     legend_scope="Live stereo image (vectorscope) of what is playing: a vertical line = mono, a wide cloud = wide stereo, a horizontal spread = out of phase. The φ bar under it says it as a number: +1 is mono-safe, around 0 is wide, below 0 means parts cancel in mono (check with the Mono key).",
     scope_idle="Press play to see the stereo image", corr_t="Phase correlation: +1 mono-safe, 0 wide, below 0 cancels in mono",
-    sec_head="Per-section numbers: the source vs the selected version",
-    sec_legend="Sections are detected automatically where the song changes character; the same letter = a repeated section (a chorus, for example). PLR = how far the peaks sit above the loudness; a large drop = the section was compressed more.",
+    part_head="Per-section numbers: the source vs the selected version",
+    part_legend="Sections are detected automatically where the song changes character; the same letter = a repeated section (a chorus, for example). PLR = how far the peaks sit above the loudness; a large drop = the section was compressed more.",
     blind="Blind test", reveal="Reveal versions",
     keys=["Keyboard:", "switch version", "Space", "play/pause", "±5 s", "loop", "loop section", "difference/spectrogram", "mono"],
     version="Version", rec="Recommended", spotify="Spotify", hidden="Hidden during the blind test",
@@ -93,7 +93,7 @@ STR = {
     view_t="רמת הפירוט. אמן ומקצועי מציגים את אותו הסשן; האודיו זהה.", view_art="אמן", view_pro="מקצועי", lang_t="שפה",
     play="▶ נגן", pause="❚❚ עצור", back_t="5 שניות אחורה", fwd_t="5 שניות קדימה",
     loop_t="לופ של 10 שניות מהמיקום הנוכחי", loop="לופ 10 שנ׳",
-    secloop_t="לופ על הקטע הנוכחי", secloop="לופ קטע", product="מוניטור A/B", position="מיקום", section_now="קטע", tracks="ערוצים",
+    partloop_t="לופ על הקטע הנוכחי", partloop="לופ קטע", product="מוניטור A/B", position="מיקום", part_now="קטע", tracks="ערוצים",
     analyzer="אנלייזר", master="מאסטר", solo_t="להאזין לגרסה הזו", loading="טוען את הסשן...",
     monitor="מוניטור", listen_label="עוצמת האזנה", raw_btn="כמו שהקבצים", spotify_btn="מנורמל כמו ספוטיפיי (‎-14 LUFS)",
     ch_t="מונו מחבר את שני הערוצים, כך שכל מה שבהיפוך פאזה נחלש או נשמע חלול; סייד משמיע רק את מה שהסטריאו מוסיף. לחיצה נוספת על מקש דולק מחזירה לסטריאו.",
@@ -112,8 +112,8 @@ STR = {
     spec_btn="ספקטרוגרמה", diff_btn="הפרש מהמקור",
     legend_scope="תמונת הסטריאו החיה (וקטורסקופ) של מה שמתנגן: קו אנכי = מונו, ענן רחב = סטריאו רחב, פריסה אופקית = היפוך פאזה. פס ה-φ שמתחתיה אומר את זה במספר: ‎+1 בטוח במונו, סביב 0 רחב, מתחת ל-0 חלקים מתבטלים במונו (כדאי לבדוק במקש מונו).",
     scope_idle="לחיצה על נגן מציגה את תמונת הסטריאו", corr_t="קורלציית פאזה: ‎+1 בטוח במונו, 0 רחב, מתחת ל-0 מתבטל במונו",
-    sec_head="נתונים לפי קטע: המקור מול הגרסה הנבחרת",
-    sec_legend="הקטעים מזוהים אוטומטית לפי שינוי אופי בשיר; אות זהה = קטע שחוזר (למשל פזמון). PLR = כמה השיאים מעל העוצמה; ירידה גדולה = הקטע נדחס יותר.",
+    part_head="נתונים לפי קטע: המקור מול הגרסה הנבחרת",
+    part_legend="הקטעים מזוהים אוטומטית לפי שינוי אופי בשיר; אות זהה = קטע שחוזר (למשל פזמון). PLR = כמה השיאים מעל העוצמה; ירידה גדולה = הקטע נדחס יותר.",
     blind="בדיקה עיוורת", reveal="חשיפת הגרסאות",
     keys=["מקלדת:", "מעבר גרסה", "רווח", "נגן/עצור", "‎±5 שנ׳", "לופ", "לופ קטע", "הפרש/ספקטרוגרמה", "מונו"],
     version="גרסה", rec="מומלץ", spotify="ספוטיפיי", hidden="מוסתר בזמן בדיקה עיוורת",
@@ -298,7 +298,7 @@ def main():
                                                       clicks=((EARS or {}).get("measurements") or {}).get("clicks") or [])))
                 .replace("__PAGE_TITLE__", html.escape(t["doc_title"])).replace("__HEADING__", html.escape(t["heading"]))
                 .replace("__BRAND__", BRAND).replace("__TAG__", TAG).replace("__BYLINE__", CREDIT).replace("__REPO__", REPO)
-                .replace("__SECTIONS_JSON__", js(json.load(open(a.sections))) if a.sections else "null"))
+                .replace("__PARTS_JSON__", js(json.load(open(a.sections))) if a.sections else "null"))
     left = sorted(set(re.findall(r"\{\{\w+\}\}", html_)))
     if left: raise SystemExit(f"template placeholders without a string: {left}")
     out = os.path.join(a.web or a.dir, a.name or ("index.html" if a.web else STR[langs[0]]["file"]))

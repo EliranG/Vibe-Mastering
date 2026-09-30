@@ -366,10 +366,10 @@ body.boot .tracks .th,body.boot .tracks .lane,body.boot .rack .slot{animation:ri
       <span class="sep" aria-hidden="true"></span>
       <div class="tgroup t-loops">
         <button class="btn" id="loop" disabled title="{{loop_t}}" data-tt="loop_t" aria-pressed="false"><span class="led"></span><span data-t="loop">{{loop}}</span></button>
-        <button class="btn" id="secloop" disabled title="{{secloop_t}}" data-tt="secloop_t" aria-pressed="false"><span class="led"></span><span data-t="secloop">{{secloop}}</span></button>
+        <button class="btn" id="partloop" disabled title="{{partloop_t}}" data-tt="partloop_t" aria-pressed="false"><span class="led"></span><span data-t="partloop">{{partloop}}</span></button>
       </div>
       <div class="lcd"><span class="lbl" data-t="position">{{position}}</span><b id="time">0:00.0 <small>/ 0:00</small></b></div>
-      <div class="lcd sm"><span class="lbl" data-t="section_now">{{section_now}}</span><b id="secnow">–</b></div>
+      <div class="lcd sm"><span class="lbl" data-t="part_now">{{part_now}}</span><b id="secnow">–</b></div>
       <div class="lcd sm mus" id="tempoLcd" hidden><span class="lbl" data-t="tempo">{{tempo}}</span><b id="bpm">–</b></div>
       <div class="lcd sm mus" id="keyLcd" hidden><span class="lbl" data-t="tonality">{{tonality}}</span><b id="keyv">–</b></div>
       <div class="tgroup push">
@@ -471,8 +471,8 @@ body.boot .tracks .th,body.boot .tracks .lane,body.boot .rack .slot{animation:ri
   </div>
 
   <details class="win panel pro-only" id="secpanel" open style="display:none">
-    <summary><span class="lbl" data-t="sec_head">{{sec_head}}</span></summary>
-    <div class="scroll"><table class="st" id="sectable"></table><p class="legend" data-t="sec_legend">{{sec_legend}}</p></div>
+    <summary><span class="lbl" data-t="part_head">{{part_head}}</span></summary>
+    <div class="scroll"><table class="st" id="sectable"></table><p class="legend" data-t="part_legend">{{part_legend}}</p></div>
   </details>
 
   <footer class="foot">
@@ -483,7 +483,7 @@ body.boot .tracks .th,body.boot .tracks .lane,body.boot .rack .slot{animation:ri
 </main>
 <script>
 const V = __VERSIONS_JSON__;
-const SEC = __SECTIONS_JSON__;
+const SEC = __PARTS_JSON__;
 const I18N = __I18N_JSON__, LANGS = Object.keys(I18N), DEF = __DEFAULTS_JSON__;
 const SRC = SEC ? (SEC.source || SEC.versions[0]) : null;      // the source's label in sections.json
 const TRACK_COLORS = ["#9b8cff", "#3fd8ff", "#ffb347", "#5cf07a", "#ff6fb1", "#ffd84d", "#5b9dff"];
@@ -930,7 +930,7 @@ async function toggle(){
 function setLoop(on, range){
   loop = on ? (range || [position(), Math.min(position() + 10, dur())]) : null;
   const a = !!loop && !range, b = !!loop && !!range;
-  $("loop").classList.toggle("on", a); $("loop").setAttribute("aria-pressed", a); $("secloop").classList.toggle("on", b); $("secloop").setAttribute("aria-pressed", b);
+  $("loop").classList.toggle("on", a); $("loop").setAttribute("aria-pressed", a); $("partloop").classList.toggle("on", b); $("partloop").setAttribute("aria-pressed", b);
   if (playing) start(on ? loop[0] : position()); else if (on) off0 = loop[0];
 }
 
@@ -1011,7 +1011,7 @@ function renderRuler(){
     return `<button class="clk" data-t="${g[0].t}" style="left:${g[0].t/D*100}%" title="${t}" aria-label="${t}"></button>`; }).join("");
   r.innerHTML = h;
   r.querySelectorAll(".flag").forEach(b => b.onclick = e => { e.stopPropagation(); const s = SEC.sections[+b.dataset.i];
-    if (loop && $("secloop").classList.contains("on")) setLoop(true, [s.start, s.end]); else seek(s.start); });
+    if (loop && $("partloop").classList.contains("on")) setLoop(true, [s.start, s.end]); else seek(s.start); });
   r.querySelectorAll(".clk").forEach(b => b.onclick = e => { e.stopPropagation(); seek(Math.max(0, +b.dataset.t - 1.5)); });   // from just before it, to hear it arrive
   r.onclick = e => seekFrom(e, r);
   curSec = -2;
@@ -1027,7 +1027,7 @@ function renderSecTable(){
   curSec = -2;
 }
 function loopSection(){ const i = secAt(position()); if (i < 0) return;
-  if ($("secloop").classList.contains("on")) setLoop(false); else setLoop(true, [SEC.sections[i].start, SEC.sections[i].end]); }
+  if ($("partloop").classList.contains("on")) setLoop(false); else setLoop(true, [SEC.sections[i].start, SEC.sections[i].end]); }
 
 // ---------- analyzer: spectrogram of the soloed track, or its difference from the source ----------
 const SP = {cols: 900, rows: 120, n: 2048, fmin: 40, fmax: 20000};
@@ -1179,7 +1179,7 @@ async function decodeAll(getters){
   ensureCtx();
   await Promise.all(V.map(async (v,i) => { v.buffer = await ctx.decodeAudioData(await getters(v,i)); $("p"+i).style.width = "100%"; }));
   V.forEach(computePeaks); ["play","back","fwd","loop"].forEach(id => $(id).disabled = false);
-  if (SEC){ $("secloop").disabled = false; renderSecTable(); }
+  if (SEC){ $("partloop").disabled = false; renderSecTable(); }
   $("loader").style.display = "none"; renderRuler(); renderTracks();
   document.body.classList.add("boot"); bootT = performance.now();                               // power-on: panels rise, meters self-test, clips draw in
   setTimeout(() => document.body.classList.remove("boot"), 1700);                                  // once only: later changes never replay it
@@ -1210,7 +1210,7 @@ $("play").onclick = toggle;
 $("back").onclick = () => seek(position() - 5);
 $("fwd").onclick = () => seek(position() + 5);
 $("loop").onclick = () => setLoop(!loop);
-$("secloop").onclick = loopSection;
+$("partloop").onclick = loopSection;
 $("dim").onclick = () => setDim(!dimOn);
 $("stream").onclick = () => setStream(!streamOn);
 $("lossless").onclick = () => setLossless(!lossless);
@@ -1234,7 +1234,7 @@ document.addEventListener("keydown", e => {
   else if (e.code === "ArrowLeft") seek(position() - 5);
   else if (e.code === "ArrowRight") seek(position() + 5);
   else if (e.code === "KeyL" && !$("loop").disabled) setLoop(!loop);
-  else if (e.code === "KeyS" && !$("secloop").disabled) loopSection();
+  else if (e.code === "KeyS" && !$("partloop").disabled) loopSection();
   else if (e.code === "KeyM") setCh("mono");
   else if (e.code === "KeyD" && view === "pro" && V[0].peaks) document.querySelector(`#specSeg button[data-s="${specMode === "diff" ? "spec" : "diff"}"]`).click();
 });
