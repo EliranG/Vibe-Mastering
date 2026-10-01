@@ -216,6 +216,10 @@ TXT = {
     h_codec="After encoding (peak after decoding, dBTP: below 0 = no distortion)", th_codec=["Codec", "Peak", "Status"],
     h_all="All versions", th_all=["Version", "LUFS", "True Peak", "PLR", "LRA", "Spotify", "Peak after encoding", "Checks"],
     h_source="Source check", h_recs="Recommendations", h_gloss="Glossary",
+    m_key="Key", m_tempo="Tempo", m_est="(estimates)", h_clicks="Possible clicks", th_clicks=["Time", "Section", "Where", "Strength"],
+    clicks_lede="Moments where the waveform jumps sharply within a few milliseconds. Often it is a sharp drum hit, sometimes a real click. Listen to each one (the comparison page marks them on its timeline); none was confirmed by ear.",
+    clicks_lede_src="Moments in the source where the waveform jumps sharply within a few milliseconds. Often it is a sharp drum hit, sometimes a real click; listen to each one. None was confirmed by ear.",
+    clicks_none="No possible clicks were found in the source or the master.", ck_src="Source only", ck_both="Source and master", ck_new="New in the master",
     footer="Every number in this report was measured on the files themselves. The report does not replace listening: the final call is made by ear.",
     h_ears="First listen: what the ears heard",
     ears_lede="Measurements that stand in for an engineer's first listen. Each finding names its evidence and the tool that answers it.",
@@ -278,6 +282,10 @@ TXT = {
     h_codec="אחרי קידוד (השיא אחרי פענוח, dBTP – מתחת ל-0 = בלי עיוות)", th_codec=["קודק", "שיא", "מצב"],
     h_all="כל הגרסאות", th_all=["גרסה", "LUFS", "True Peak", "PLR", "LRA", "Spotify", "שיא אחרי קידוד", "בדיקות"],
     h_source="בדיקת המקור", h_recs="המלצות", h_gloss="מילון מונחים",
+    m_key="סולם", m_tempo="טמפו", m_est="(הערכות)", h_clicks="קליקים אפשריים", th_clicks=["זמן", "קטע", "איפה", "עוצמה"],
+    clicks_lede="רגעים שבהם צורת הגל קופצת בחדות בתוך אלפיות שנייה. לרוב זו מכה חדה של תוף, לפעמים קליק אמיתי. כדאי להקשיב לכל אחד (בעמוד ההשוואה הם מסומנים על ציר הזמן); אף אחד מהם לא אומת באוזן.",
+    clicks_lede_src="רגעים במקור שבהם צורת הגל קופצת בחדות בתוך אלפיות שנייה. לרוב זו מכה חדה של תוף, לפעמים קליק אמיתי; כדאי להקשיב לכל אחד. אף אחד מהם לא אומת באוזן.",
+    clicks_none="לא נמצאו קליקים אפשריים במקור או במאסטר.", ck_src="רק במקור", ck_both="במקור ובמאסטר", ck_new="חדש במאסטר",
     footer="כל המספרים בדוח נמדדו על הקבצים עצמם. הדוח לא מחליף האזנה – ההכרעה הסופית היא באוזניים.",
     h_ears="האזנה ראשונה: מה האוזניים שמעו",
     ears_lede="מדידות שמחליפות את ההאזנה הראשונה של טכנאי. כל ממצא מציין את הראיה ואת הכלי שמטפל בו.",
@@ -352,6 +360,40 @@ def _items(x):
     if not x: return []
     if isinstance(x, str): return [p for p in re.split(r"(?<=[.!?])\s+(?=\S)", x.strip()) if p]
     return [p for p in x if p]
+mmss1 = lambda t: f"{int(t)//60}:{t % 60:04.1f}"
+
+def music_line(an, t):
+    """Key and tempo as the A/B page shows them: estimates, with the runner-up key when the two are this close."""
+    kd = an.get("key_detail") or {}; bpm = an.get("tempo_bpm")
+    short = lambda n: (n.split()[0] + ("m" if n.endswith("minor") else "")) if n else None
+    nice = lambda k: re.sub(r"b(?=m?$)", "\u266d", k.replace("#", "\u266f")) if k else None
+    key = nice(kd.get("short") or short(an.get("key")))
+    alt = nice(short(kd.get("runner_up"))) if kd.get("confidence") is not None and kd["confidence"] < 0.03 else None
+    parts = []
+    if key: parts.append(f'{A(t["m_key"])} <span class="num" dir="ltr">{html.escape(key + (" / " + alt if alt else ""))}</span>')
+    if bpm: parts.append(f'{A(t["m_tempo"])} <span class="num" dir="ltr">\u2248{round(bpm)} BPM</span>')
+    return f'<p class="lede">{" · ".join(parts)} {A(t["m_est"])}</p>' if parts else ""
+
+def clicks_html(t, ears, cmp, sec, label):
+    """Possible clicks: when, in which section, and whether the master added them - a list to check by ear, never a verdict."""
+    src = ((ears or {}).get("measurements") or {}).get("clicks")
+    fin = (((cmp or {}).get("versions") or {}).get(label) or {}).get("clicks")
+    if src is None and fin is None: return ""                     # a run from before clicks were measured
+    near = lambda c, cs: any(abs(c["t"] - d["t"]) < 0.05 for d in cs or [])
+    if fin is None: rows = [(c, "src") for c in src or []]
+    else: rows = [(c, "both" if near(c, fin) else "src") for c in src or []] + [(c, "new") for c in fin if not near(c, src)]
+    rows.sort(key=lambda r: r[0]["t"])
+    head = f'<h2>{A(t["h_clicks"])}</h2>'
+    if not rows: return head + f'<p class="lede">{A(t["clicks_none"])}</p>'
+    letter = lambda s: next((x["letter"] for x in sec or [] if x["start"] <= s < x["end"]), "–")
+    where = lambda w: f'<span class="chip warn">{A(t["ck_new"])}</span>' if w == "new" else A(t["ck_" + w])
+    pro = ' class="pro-only"'
+    th = "".join(f'<th{pro if i == 3 else ""}>{E(h)}</th>' for i, h in enumerate(t["th_clicks"]))
+    tr = "".join(f'<tr><td class="n" dir="ltr">{mmss1(c["t"])}</td><td>{html.escape(letter(c["t"]))}</td><td>{where(w)}</td>'
+                 f'<td class="n pro-only">{c.get("ratio", 0):.0f}\u00d7</td></tr>' for c, w in rows)
+    lede = t["clicks_lede"] if fin is not None else t["clicks_lede_src"]
+    return head + f'<p class="lede">{A(lede)}</p><div class="scroll"><table><tr>{th}</tr>{tr}</table></div>'
+
 def bullets(items):
     items = _items(items)
     return '<ul class="plain">' + "".join(f"<li>{E(p)}</li>" for p in items) + "</ul>" if items else ""
@@ -578,6 +620,7 @@ def render(lang, a, D, N):
 <div class="eyebrow">{A(t["eyebrow"])} · {E(N.get("date", ""))}</div>
 <h1>{E(N["title"])}</h1>
 <p class="lede">{E(N.get("artist", ""))} · {A(t["final"])}: {E(label)} · <span class="num">{qfin["lufs_i"]:.1f} LUFS · {qfin["true_peak_dbtp"]:.2f} dBTP</span></p>
+{music_line(an, t)}
 <section class="verdict"><h2>{A(t["h_bottom"])}</h2>{bullets(N.get("bottom_line"))}<div class="chips">{chips}</div></section>
 {ab}
 
@@ -593,6 +636,7 @@ def render(lang, a, D, N):
 <figure>{svg_timeline(D["st_x"], D["st_y"], D["hop"], D["dur"], sec, label, t)}
 <div class="legend"><span><i style="background:var(--src)"></i>{A(t["source"])}</span><span><i style="background:var(--fin)"></i>{E(label)}</span><span>{A(t["lg_sections"])}</span></div>
 <figcaption>{A(t["cap_timeline"])}</figcaption></figure>
+{clicks_html(t, D["ears"], D["cmp"], sec, label)}
 
 <div class="art-only"><h2>{A(t["h_listen"])}</h2><p>{E(auto_sections(w, src, label, t))}</p><p>{E(listen)}</p>
 <h2>{A(t["h_ready"])}</h2>{ready_html(qfin, t)}</div>

@@ -183,9 +183,9 @@ def compare(src, versions):
         notes = [f"DR {mv['dr']}: {band_} on Ian Shepherd's scale", f"PSR {mv['psr_db']} dB" + (" - under 8, the level that suggests heavy limiting" if (mv["psr_db"] or 99) < 8 else "")]
         rows[lab] = dict(dr=mv["dr"], psr_db=mv["psr_db"], plr_db=mv["plr_db"], sharpness_acum=mv["sharpness_acum"], notes=notes,
                          sharpness_change=None if None in (mv["sharpness_acum"], ms["sharpness_acum"]) else round(mv["sharpness_acum"] - ms["sharpness_acum"], 3),
-                         octave_change_db=tilt, mono_fold_change_db=mv["mono_fold_change_db"], flags=flags)
+                         octave_change_db=tilt, mono_fold_change_db=mv["mono_fold_change_db"], flags=flags, clicks=mv["clicks"])
     return dict(source=dict(dr=ms["dr"], psr_db=ms["psr_db"], plr_db=ms["plr_db"], sharpness_acum=ms["sharpness_acum"],
-                            mono_fold_change_db=ms["mono_fold_change_db"]), versions=rows)
+                            mono_fold_change_db=ms["mono_fold_change_db"], clicks=ms["clicks"]), versions=rows)
 
 def main():
     ap = argparse.ArgumentParser(); sub = ap.add_subparsers(dest="cmd", required=True)
