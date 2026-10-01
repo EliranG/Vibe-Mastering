@@ -1,0 +1,82 @@
+{
+ "source": "Google Fonts, SIL Open Font License 1.1 (licenses/)",
+ "faces": [
+  {
+   "family": "Chakra Petch",
+   "weight": "500",
+   "subset": "latin",
+   "unicode_range": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+   "file": "ChakraPetch-500-latin.woff2"
+  },
+  {
+   "family": "Chakra Petch",
+   "weight": "600",
+   "subset": "latin",
+   "unicode_range": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+   "file": "ChakraPetch-600-latin.woff2"
+  },
+  {
+   "family": "Chakra Petch",
+   "weight": "700",
+   "subset": "latin",
+   "unicode_range": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+   "file": "ChakraPetch-700-latin.woff2"
+  },
+  {
+   "family": "Heebo",
+   "weight": "400 700",
+   "subset": "hebrew",
+   "unicode_range": "U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F",
+   "file": "Heebo-hebrew.woff2"
+  },
+  {
+   "family": "Heebo",
+   "weight": "400 700",
+   "subset": "latin",
+   "unicode_range": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+   "file": "Heebo-latin.woff2"
+  },
+  {
+   "family": "IBM Plex Sans",
+   "weight": "400 600",
+   "subset": "latin",
+   "unicode_range": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+   "file": "IBMPlexSans-latin.woff2"
+  },
+  {
+   "family": "IBM Plex Sans Hebrew",
+   "weight": "400",
+   "subset": "hebrew",
+   "unicode_range": "U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F",
+   "file": "IBMPlexSansHebrew-400-hebrew.woff2"
+  },
+  {
+   "family": "IBM Plex Sans Hebrew",
+   "weight": "600",
+   "subset": "hebrew",
+   "unicode_range": "U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F",
+   "file": "IBMPlexSansHebrew-600-hebrew.woff2"
+  },
+  {
+   "family": "IBM Plex Sans Hebrew",
+   "weight": "400",
+   "subset": "latin",
+   "unicode_range": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+   "file": "IBMPlexSansHebrew-400-latin.woff2"
+  },
+  {
+   "family": "IBM Plex Sans Hebrew",
+   "weight": "600",
+   "subset": "latin",
+   "unicode_range": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+   "file": "IBMPlexSansHebrew-600-latin.woff2"
+  },
+  {
+   "family": "JetBrains Mono",
+   "weight": "400 700",
+   "subset": "latin",
+   "unicode_range": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+   "file": "JetBrainsMono-latin.woff2"
+  }
+ ]
+}

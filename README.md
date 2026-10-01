@@ -189,7 +189,7 @@ For anything large, open an issue first. Contributions are accepted under GPL-3.
 Your audio never leaves your computer. The only downloads are the Python packages from PyPI when the environment is
 created (ffmpeg comes as one of them, `imageio-ffmpeg`), and, only after you agree, the two optional plugins from their
 authors' GitHub releases (ChowTapeModel-Mac-2.11.4.dmg, 27 MB; ZL.Equalizer.2-1.4.0-macOS-arm64.dmg, 11 MB), checked
-against pinned SHA-256 hashes. No paid API is used.
+against pinned SHA-256 hashes. No paid API is used, and the pages carry their own fonts, so opening one contacts no server.
 
 ## Honest limits
 
@@ -213,6 +213,7 @@ Made by Eliran Geffen. GPL-3.0-or-later (see `LICENSE`), because it builds on GP
 | [MoSQITo](https://github.com/Eomys/MoSQITo) | Apache-2.0 | installed from PyPI (sharpness, DIN 45692) |
 | [CHOWTapeModel](https://github.com/jatinchowdhury18/AnalogTapeModel) | GPL-3.0 | optional, downloaded from its releases |
 | [ZL Equalizer](https://github.com/ZL-Audio/ZLEqualizer) | AGPL-3.0 | optional, downloaded from its releases |
+| Fonts: Chakra Petch, Heebo, IBM Plex Sans, IBM Plex Sans Hebrew, JetBrains Mono | SIL OFL 1.1 | bundled in `assets/fonts` (licenses beside them) and embedded into each page |
 
 ---
 

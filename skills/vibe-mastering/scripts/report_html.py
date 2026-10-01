@@ -13,6 +13,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import mslib as L, explain
 from scipy.signal import stft, welch
 from compare_page import BRAND, TAG, CREDIT, REPO
+from fonts import font_faces
 LOGO = ('<svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="8" fill="#10161d" stroke="#3fd8ff" stroke-opacity=".55"/>'
         '<rect x="7" y="14" width="3" height="10" rx="1.5" fill="#3fd8ff"/><rect x="12" y="8" width="3" height="16" rx="1.5" fill="#3fd8ff"/>'
         '<rect x="17" y="11" width="3" height="13" rx="1.5" fill="#3fd8ff"/><rect x="22" y="17" width="3" height="7" rx="1.5" fill="#9b8cff"/></svg>')
@@ -186,7 +187,7 @@ a.ab b{display:block;font-size:17px;font-family:var(--ui)}a.ab small{display:blo
 
 TXT = {
  "en": dict(
-    dir="ltr", font='"IBM Plex Sans",system-ui,sans-serif', font_css="IBM+Plex+Sans:wght@400;600", arrow="→", source="Source",
+    dir="ltr", font='"IBM Plex Sans",system-ui,sans-serif', arrow="→", source="Source",
     aria_timeline="Loudness over the song, the source vs {label}",
     m_loud=("Loudness", "The song is {dL:.1f} dB louder. By the rule of thumb (10 dB ≈ twice as loud) that is about {ratio:.1f}x the perceived loudness."),
     m_tp=("True peak", "The peak is kept below -2 so it does not distort after Spotify, Apple and YouTube encode it (Spotify's guideline for loud masters)."),
@@ -252,7 +253,7 @@ TXT = {
       ("Spectrogram", "A picture of the sound: time on the horizontal axis, frequency on the vertical (bass at the bottom, highs at the top), brightness = level."),
       ("C2PA", "A signed digital provenance certificate embedded in the file that records how it was made (for example, by AI).")]),
  "he": dict(
-    dir="rtl", font='"IBM Plex Sans Hebrew","Arial Hebrew",system-ui,sans-serif', font_css="IBM+Plex+Sans+Hebrew:wght@400;600", arrow="←", source="מקור",
+    dir="rtl", font='"IBM Plex Sans Hebrew","Arial Hebrew",system-ui,sans-serif', arrow="←", source="מקור",
     aria_timeline="עוצמה לאורך השיר, המקור מול {label}",
     m_loud=("עוצמה", "השיר חזק ב-{dL:.1f} dB – לפי כלל האצבע (10 dB ≈ פי 2 בתחושה) זה בערך פי {ratio:.1f} בעוצמה הנתפסת."),
     m_tp=("שיא אמיתי", "השיא נשמר מתחת ל-‎-2‏ כדי שלא יתעוות אחרי הקידוד של ספוטיפיי, אפל ויוטיוב (ההנחיה של ספוטיפיי לשירים חזקים)."),
@@ -726,10 +727,9 @@ def main():
         def keep(mt):
             k = imgs.setdefault(mt.group(1), f"i{len(imgs)}"); return f'data-img="{k}"'
         bodies = [re.sub(r'src="(data:image/[^"]+)"', keep, b) for b in bodies]
-    fonts = "&".join(dict.fromkeys(f"family={TXT[l]['font_css']}" for l in langs))
+    fams = {"Chakra Petch", "Heebo", "JetBrains Mono"} | {re.match(r'"([^"]+)"', TXT[l]["font"]).group(1) for l in langs}
     head = (f'<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>{A(NN[langs[0]]["page_title"])}</title>\n'
-            f'<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
-            f'<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Heebo:wght@500;600;700&{fonts}&family=JetBrains+Mono:wght@400;600&display=swap">\n'
+            f'<style>{font_faces(fams)}</style>\n'
             f'<style>{CSS.replace("__FONT__", TXT[langs[0]]["font"])}</style>\n<body class="v-{a.view}">\n')
     imgjs = ("<script>var IMG=" + json.dumps({v: k for k, v in imgs.items()}) +
              ";[].forEach.call(document.querySelectorAll('img[data-img]'),function(i){i.src=IMG[i.dataset.img]});</script>") if imgs else ""

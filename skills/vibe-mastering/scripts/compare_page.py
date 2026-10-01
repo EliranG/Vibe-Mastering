@@ -20,6 +20,7 @@ All versions have the same length, so they get the same encoder delay and stay s
 limit, joined by the page) for the page's Lossless key, which loads them only when pressed. The files maps printed at
 the end go to the Artifact tool's `files`: the first with the page, each further one to the same url (one call each)."""
 import os, re, sys, json, argparse, html, subprocess
+from fonts import font_faces
 from concurrent.futures import ThreadPoolExecutor
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import explain
@@ -298,6 +299,7 @@ def main():
                                                       clicks=((EARS or {}).get("measurements") or {}).get("clicks") or [])))
                 .replace("__PAGE_TITLE__", html.escape(t["doc_title"])).replace("__HEADING__", html.escape(t["heading"]))
                 .replace("__BRAND__", BRAND).replace("__TAG__", TAG).replace("__BYLINE__", CREDIT).replace("__REPO__", REPO)
+                .replace("/*@fonts*/", font_faces({"Chakra Petch", "JetBrains Mono", "IBM Plex Sans", "Heebo"}))
                 .replace("__PARTS_JSON__", js(json.load(open(a.sections))) if a.sections else "null"))
     left = sorted(set(re.findall(r"\{\{\w+\}\}", html_)))
     if left: raise SystemExit(f"template placeholders without a string: {left}")
